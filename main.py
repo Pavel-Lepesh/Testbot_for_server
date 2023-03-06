@@ -41,7 +41,9 @@ class FSMFillForm(StatesGroup):
 async def process_start_command(message: Message):
     await message.answer(text='Этот бот демонстрирует работу FSM\n\n'
                               'Чтобы перейти к заполнению анкеты - '
-                              'отправьте команду /fillform')
+                              'отправьте команду /fillform\n\n'
+                              'Чтобы посмотреть свой id - '
+                              'отправьте команду /myid')
 
 
 # Этот хэндлер будет срабатывать на команду "/cancel" в состоянии
@@ -51,6 +53,11 @@ async def process_cancel_command(message: Message):
     await message.answer(text='Отменять нечего. Вы вне машины состояний\n\n'
                               'Чтобы перейти к заполнению анкеты - '
                               'отправьте команду /fillform')
+
+
+@dp.message(Command(commands='myid'), StateFilter(default_state))
+async def process_myid_command(message: Message):
+    await message.answer(f'{message.from_user.id}')
 
 
 # Этот хэндлер будет срабатывать на команду "/cancel" в любых состояниях,
